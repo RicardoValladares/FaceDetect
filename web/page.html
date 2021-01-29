@@ -1,0 +1,72 @@
+<html>
+<head>
+    <title>Envia Imagen al dar Click</title>
+</head>
+<style>
+    /* espejo la imagen */
+    video, canvas {
+    transform: scale(-1, 1); /*Para Firefox e IExplorer*/
+    -webkit-transform: scale(-1, 1); /*Para Chrome, Opera y Safari*/
+}
+</style>
+<body>
+<video id="myVideo" autoplay></video>
+
+<script>
+
+    let v = document.getElementById("myVideo");
+
+    //Creamos canvas grab una imagen por subida
+    let imageCanvas = document.createElement('canvas');
+    let imageCtx = imageCanvas.getContext("2d");
+
+    //Agregamos archivo blob al formulario a enviar
+    function postFile(file) {
+        let formdata = new FormData();
+        formdata.append("image", file);
+        let xhr = new XMLHttpRequest();
+        xhr.open('POST', 'http://localhost:5000/upload', true);
+        xhr.onload = function () {
+            if (this.status === 200)
+                console.log(this.response);
+            else
+                console.error(xhr);
+        };
+        xhr.send(formdata);
+    }
+
+    //Obtenemos imagen desde el canvas
+    function sendImagefromCanvas() {
+
+        //Canvas setea su dimension por la del video
+        imageCanvas.width = v.videoWidth;
+        imageCanvas.height = v.videoHeight;
+
+        imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
+
+        //Convierte el canvas a Blob y envia el archivo
+        imageCanvas.toBlob(postFile, 'image/jpeg');
+    }
+
+    //HAS CLICK EN EL VISOR PARA ENVIAR AL SERVER
+    v.onclick = function() {
+        console.log('click');
+        sendImagefromCanvas();
+    };
+
+    window.onload = function () {
+
+        //Obtenemos Camara de Video
+        navigator.mediaDevices.getUserMedia({video: {width: 1280, height: 720}, audio: false})
+            .then(stream => {
+                v.srcObject = stream;
+            })
+            .catch(err => {
+                console.log('navigator.getUserMedia error: ', err)
+            });
+
+    };
+
+</script>
+</body>
+</html>

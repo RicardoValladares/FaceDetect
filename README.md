@@ -1,5 +1,5 @@
 # Server Python con Flask
-Servidor Web Hecho en Python
+Servidor Web Hecho en Python 3
 
 Creditos a: https://palletsprojects.com/p/flask/ por el componente para hacer este tipo de servicio en python.
 

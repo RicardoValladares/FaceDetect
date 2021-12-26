@@ -1,5 +1,5 @@
-# Server Python con Flask
-Servidor Web Hecho en Python 3
+# Detectar rostros
+Servidor Web Hecho en Python 3 para detectar rostros
 
 Creditos a: https://palletsprojects.com/p/flask/ por el componente para hacer este tipo de servicio en python.
 

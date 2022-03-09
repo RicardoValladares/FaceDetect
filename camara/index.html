@@ -3,7 +3,7 @@
   <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>OpenCV FaceDetect</title>
+    <title>WebCam</title>
     <script async src='opencv.js' onload='openCvReady();'></script>
     <script src='utils.js'></script>
     <style> 
@@ -77,7 +77,7 @@
             document.getElementById('estado').innerHTML = 'Facial no detectado';
             document.getElementById("estado").style.backgroundColor="#f44336";
           }
-          let rect = new cv.Rect(133, 0, 373, 480);
+          let rect = new cv.Rect(160, 0, 320, 480);
           dst = src.roi(rect);
           cv.imshow('canvas_output', dst);
           dst.delete();
@@ -94,7 +94,7 @@
     cap.read(src);
     cv.imshow('SALIDA', src);
     let dst = new cv.Mat();
-    let rect = new cv.Rect(133, 0, 373, 480);
+    let rect = new cv.Rect(160, 0, 320, 480);
     dst = src.roi(rect);
     cv.imshow('SALIDA', dst);
     src.delete();

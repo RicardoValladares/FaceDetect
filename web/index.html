@@ -105,9 +105,41 @@
     	setTimeout('temporizador()',1000);
     }
     function ejecutar(){
+    	let imageCanvas = document.createElement('canvas');
+    	let imageCtx = imageCanvas.getContext("2d");
+		/*let cap = new cv.VideoCapture(cam_input);
+	    let video = document.getElementById('cam_input');
+	    let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+	    cap.read(src);
+	    cv.imshow('SALIDA', src);
+	    let dst = new cv.Mat();
+	    let rect = new cv.Rect(160, 0, 320, 480);
+	    dst = src.roi(rect);
+	    cv.imshow('SALIDA', dst);*/
+    	let v = document.getElementById("cam_input");
+    	imageCanvas.width = v.videoWidth;
+        imageCanvas.height = v.videoHeight;
+        imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
+        //Convierte el canvas a Blob y envia el archivo
+        imageCanvas.toBlob(postFile, 'image/jpeg');
     	//subimos imagen
     	tiempo = 0;
     }
+
+    function postFile(file) {
+         let formdata = new FormData();
+         formdata.append("image", file);
+         let xhr = new XMLHttpRequest();
+         xhr.open('POST', 'http://localhost:5000/upload', true);
+         xhr.onload = function () {
+             if (this.status === 200)
+                 console.log(this.response);
+             else
+                 console.error(xhr);
+         };
+         xhr.send(formdata);
+     }
+        
   </script>
 </body>
 

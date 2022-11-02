@@ -25,9 +25,9 @@ func subidor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer file.Close()
-	fmt.Printf("Archivo: %+v\n", handler.Filename)
-	fmt.Printf("Tamaño: %+v\n", handler.Size)
-	fmt.Printf("MIME Encabezado: %+v\n", handler.Header)
+	//fmt.Printf("Archivo: %+v\n", handler.Filename)
+	//fmt.Printf("Tamaño: %+v\n", handler.Size)
+	//fmt.Printf("MIME Encabezado: %+v\n", handler.Header)
 
 	// generamos un nombre de archivo ramdom
 	tempFile, err := ioutil.TempFile("upload", "*"+filepath.Ext(handler.Filename))

@@ -15,7 +15,7 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body  bgcolor="#000">
 		<br>
 		<center> <span id="Tiempo" class="labelt">0</span> <span id="Estado" class="labele">Iniciando</span> <center>
 		<br><br>
@@ -36,7 +36,7 @@
 					let utils = new Utils('errorMessage');
 					let faceCascade = 'haarcascade_frontalface_default.xml';
 					utils.createFileFromUrl(faceCascade, faceCascade, () => { faceClassifier.load(faceCascade); });
-					const FPS = 30;
+					const FPS = 40;
 					function processVideo() {
 						let begin = Date.now();
 						cap.read(src);

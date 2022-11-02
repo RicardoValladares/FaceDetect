@@ -3,6 +3,7 @@ package main
 import (
 	"io/ioutil"
 	"net/http"
+	"fmt"
 )
 
 func main() {
@@ -36,6 +37,7 @@ func main() {
 		tempFile.Write(fileBytes)
 		file.Close()
 		tempFile.Close()
+		fmt.Fprintf(w, "Subida Completada '%s'\n",tempFile.Name())
 	})
 	http.ListenAndServe(":5000", nil)
 }

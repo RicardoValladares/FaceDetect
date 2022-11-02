@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"path/filepath"
+//	"path/filepath"
 )
 
 func subidor(w http.ResponseWriter, r *http.Request) {
@@ -18,7 +18,7 @@ func subidor(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// inputfile de nombre Archivo
-	file, handler, err := r.FormFile("image")
+	file, _, err := r.FormFile("image")
 	if err != nil {
 		fmt.Fprintf(w, "Error al obtener el archivo el servidor\n")
 		fmt.Println("Error al obtener el archivo del cliente")
@@ -30,7 +30,7 @@ func subidor(w http.ResponseWriter, r *http.Request) {
 	//fmt.Printf("MIME Encabezado: %+v\n", handler.Header)
 
 	// generamos un nombre de archivo ramdom
-	tempFile, err := ioutil.TempFile("upload", "*"+filepath.Ext(handler.Filename))
+	tempFile, err := ioutil.TempFile("upload", "*"+".png" )
 	if err != nil {
 		fmt.Fprintf(w, "La carpeta subidos no Existe o No se logro ramdomizar el nombre\n")
 		fmt.Println("La carpeta subidos no Existe o No se logro ramdomizar el nombre")

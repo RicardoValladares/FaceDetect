@@ -17,16 +17,14 @@
 	</head>
 	<body  bgcolor="#000">
 		<br>
-		<center> <span id="Tiempo" class="labelt">0</span> <span id="Estado" class="labele">Iniciando</span> <center></center>
+		<center> <span id="Tiempo" class="labelt">0</span> <span id="Estado" class="labele">Iniciando</span> </center>
 		<br><br>
-		<center> <video id='cam_input' height='480' width='640' class="camara"></video> <center></center>		
-		<! canvas id='canvas_output' />
+		<center><! canvas id='canvas_output' /><! /canvas> <video id='cam_input' height='480' width='640' class="camara"></video> </center>
 		<script>
 			
 			function openCvReady() {
 				cv['onRuntimeInitialized'] = () => {
 					let video = document.getElementById('cam_input');
-					//document.getElementById('canvas_output').style.display="none"; 
 					//video.style.display="none"; 
 					navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { video.srcObject = stream; video.play(); }).catch(function (err) { console.log('Error: ' + err); });
 					let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);

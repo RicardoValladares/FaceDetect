@@ -7,7 +7,7 @@ Especiales agradecimientos y creditos por la documentacion de opencv.js:  https:
 <hr>
 
 <p align="center">
-  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/Yu-Gi-Oh/master/ScreenShoot-PC.png" width="45%">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/captura2.gif" width="45%">
   &nbsp; &nbsp; &nbsp; &nbsp;
   <img alt="Dark" src="https://raw.githubusercontent.com/RicardoValladares/WebServer_BiometriCam/facedetection/captura.gif" width="45%">
 </p>

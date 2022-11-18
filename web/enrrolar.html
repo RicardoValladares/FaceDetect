@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'> 
 		<title>OpenCV FaceDetect</title>
 		<script async src='opencv.js' onload='openCvReady();'></script>
 		<script src='utils.js'></script>
@@ -15,17 +15,17 @@
 			}
 		</style>
 	</head>
-	<body  bgcolor="#000" oncontextmenu="return false" onkeydown="return false">
+	<body  bgcolor='#000' oncontextmenu='return false' onkeydown='return false'>
 		<br>
-		<center> <span id="Tiempo" class="labelt">0</span> <span id="Estado" class="labele">Iniciando</span> </center>
+		<center> <span id='Tiempo' class='labelt'>0</span> <span id='Estado' class='labele'>Iniciando</span> </center>
 		<br><br>
-		<center><! canvas id='canvas_output' /><! /canvas> <video id='cam_input' height='480' width='640' class="camara"></video> </center>
+		<center><! canvas id='canvas_output' /><! /canvas> <video id='cam_input' height='480' width='640' class='camara'></video> </center>
 		<script>
 			
 			function openCvReady() {
 				cv['onRuntimeInitialized'] = () => {
 					let video = document.getElementById('cam_input');
-					//video.style.display="none"; 
+					//video.style.display='none'; 
 					navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { video.srcObject = stream; video.play(); }).catch(function (err) { console.log('Error: ' + err); });
 					let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
 					let gray = new cv.Mat();
@@ -55,11 +55,11 @@
 						}
 						if(detectado==1){
 							document.getElementById('Estado').innerHTML = 'Facial detectado';
-							document.getElementById("Estado").style.backgroundColor="#04aa6d";
+							document.getElementById('Estado').style.backgroundColor='#04aa6d';
 						}
 						else{
 							document.getElementById('Estado').innerHTML = 'Facial no detectado';
-							document.getElementById("Estado").style.backgroundColor="#f44336";
+							document.getElementById('Estado').style.backgroundColor='#f44336';
 						}
 						//cv.imshow('canvas_output', src);
 						let delay = 1000 / FPS - (Date.now() - begin);
@@ -73,7 +73,7 @@
 			setTimeout('temporizador()',1000);
 
 			function temporizador() {
-				if(document.getElementById('Estado').textContent=="Facial detectado"){
+				if(document.getElementById('Estado').textContent=='Facial detectado'){
 					tiempo = tiempo + 1;
 					document.getElementById('Tiempo').innerHTML = tiempo;
 				}
@@ -89,8 +89,8 @@
 
 			function ejecutar(){
 				let imageCanvas = document.createElement('canvas');
-				let imageCtx = imageCanvas.getContext("2d");
-				let v = document.getElementById("cam_input");
+				let imageCtx = imageCanvas.getContext('2d');
+				let v = document.getElementById('cam_input');
 				imageCanvas.width = v.videoWidth;
 				imageCanvas.height = v.videoHeight;
 				imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
@@ -100,12 +100,12 @@
 			
 			function postFile(file) {
 				let formdata = new FormData();
-				let identificador = prompt("Ingrese un identificador:");
+				let identificador = prompt('Ingrese un identificador:');
 				if(identificador==null){
 					return
 				}
-				formdata.append("id", identificador);
-				formdata.append("image", file);
+				formdata.append('id', identificador);
+				formdata.append('image', file);
 				let xhr = new XMLHttpRequest();
 				xhr.open('POST', 'enrrolar', true);
 				xhr.onload = function () {

@@ -6,7 +6,8 @@
 		<script src='utils.js'></script>
 		<style> 
 			.labele { color: white; padding: 8px; font-family: Arial; background-color: #ff9800; }
-			.labelt { color: white; padding: 8px; font-family: Arial; background-color: #04aa6d; } 
+			.labelt { color: white; padding: 8px; font-family: Arial; background-color: #04aa6d; }
+			.labeli { color: white; padding: 8px; font-family: Arial; background-color: #f44336; } 
 			@media only screen and (max-width: 992px) {
 				video.camara { height:640px; width:480px; display: block; margin-left: auto; margin-right: auto; }
 			}
@@ -17,7 +18,7 @@
 	</head>
 	<body  bgcolor="#000" oncontextmenu="return false" onkeydown="return false">
 		<br>
-		<center> <span id="Tiempo" class="labelt">0</span> <span id="Estado" class="labele">Iniciando</span> </center>
+		<center> <span id="Tiempo" class="labelt">0</span> <span id="Estado" class="labele">Iniciando</span> <span id="Identificador" class="labeli">Desconocido</span> </center>
 		<br><br>
 		<center><! canvas id='canvas_output' /><! /canvas> <video id='cam_input' height='480' width='640' class="camara"></video> </center>
 		<script>
@@ -68,21 +69,24 @@
 					setTimeout(processVideo, 0);
 				}
 			}
-			
+
+			let identificado = 0;
 			let tiempo = 0;
 			setTimeout('temporizador()',1000);
 
 			function temporizador() {
-				if(document.getElementById('Estado').textContent=="Facial detectado"){
-					tiempo = tiempo + 1;
-					document.getElementById('Tiempo').innerHTML = tiempo;
-				}
-				else{
-					tiempo = 0;
-					document.getElementById('Tiempo').innerHTML = tiempo;
-				}
-				if(tiempo == 5){
-					ejecutar();
+				if(identificado==0){
+					if(document.getElementById('Estado').textContent=="Facial detectado"){
+						tiempo = tiempo + 1;
+						document.getElementById('Tiempo').innerHTML = tiempo;
+					}
+					else{
+						tiempo = 0;
+						document.getElementById('Tiempo').innerHTML = tiempo;
+					}
+					if(tiempo == 5){
+						ejecutar();
+					}
 				}
 				setTimeout('temporizador()',1000);
 			}
@@ -102,16 +106,26 @@
 				let formdata = new FormData();
 				formdata.append("image", file);
 				let xhr = new XMLHttpRequest();
-				xhr.open('POST', 'upload', true);
+				xhr.open('POST', 'identificar', true);
 				xhr.onload = function () {
-					if (this.status === 200)
-						console.log(this.response);
-					else
-						console.error(xhr);
+					if (this.status === 200){
+						identificacion(this.response);
+					}
 				};
 				xhr.send(formdata);
 			}
-			
+			async function identificacion(res) {
+				identificado = 1;
+				document.getElementById('Identificador').innerHTML = res;
+				document.getElementById("Identificador").style.backgroundColor="#04aa6d";
+			    await sleep(5 * 1000);
+			    document.getElementById('Identificador').innerHTML = 'Desconocido';
+			    document.getElementById("Identificador").style.backgroundColor="#f44336";
+			    identificado = 0;
+			}
+			function sleep(ms) {
+			    return new Promise((resolve) => setTimeout(resolve, ms));
+			}
 		</script>
 	</body>
 </html>

@@ -127,8 +127,8 @@ func main() {
 							tiempo = 0; //reiniciamos el contador si no detectamos rostro
 							document.getElementById('Tiempo').innerHTML = tiempo;
 						}
-						//cuando haya pasado 5 segundos de la deteccion de un rostro ejecutar()
-						if(tiempo == 5){
+						//cuando haya pasado 3 segundos de la deteccion de un rostro ejecutar()
+						if(tiempo == 3){
 							ejecutar(); 
 						}
 						setTimeout('temporizador()',1000);
@@ -253,8 +253,8 @@ func main() {
 								tiempo = 0; //reiniciamos contador si no detectamos rostro
 								document.getElementById('Tiempo').innerHTML = tiempo;
 							}
-							//cuando hayan pasado 5 segundos de la deteccion de un rostro ejecutar()
-							if(tiempo == 5){
+							//cuando hayan pasado 3 segundos de la deteccion de un rostro ejecutar()
+							if(tiempo == 3){
 								ejecutar(); 
 							}
 						}

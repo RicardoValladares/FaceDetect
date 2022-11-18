@@ -1,5 +1,5 @@
 # Detectar rostros
-Servidor Web Hecho en Golang para detectar rostros
+Servidor Web Hecho en Golang para detectar y reconocer rostros
 
 Librerias usadas:
 - Go-Face (https://github.com/Kagami/go-face)

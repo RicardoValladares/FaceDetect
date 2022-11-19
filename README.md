@@ -9,7 +9,11 @@ Librerías usadas:
 Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 - @davisking (https://github.com/davisking/dlib-models)
 
-![Captura de Pantalla](https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/captura.png)
+<p align="center">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="45%">
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img alt="Dark" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/celphone.png" width="45%">
+</p>
 
 ## Reconocimiento - dlib_face_recognition_resnet_model_v1.dat
 La red se entrenó desde cero con un conjunto de datos de aproximadamente 3 millones de rostros. Este conjunto de datos se deriva de dos conjuntos de datos. El conjunto de datos de face scrub (http://vintage.winklerbros.net/facescrub.html) y el conjunto de datos de VGG (http://www.robots.ox.ac.uk/~vgg/data/vgg_face/). Se hizo este modelo entrenando una CNN de reconocimiento facial y luego usando métodos de agrupación de gráficos y mucha revisión manual para limpiar el conjunto de datos. Al final, aproximadamente la mitad de las imágenes son de VGG y face scrub. Además, el número total de identidades individuales en el conjunto de datos es 7485. Se evitaron superposiciones de identidades en LFW.

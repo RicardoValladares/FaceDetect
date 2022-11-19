@@ -62,7 +62,7 @@ func main() {
 				</center><br><br>
 				<center>
 <! ---------------------------------------------------------- si quieres ver el recuadro, descomenta la siguiente linea ---------------------------------------------------------- >
-					<canvas id='canvas_output' /></canvas> 
+					<! canvas id='canvas_output' /><! /canvas> 
 					<video id='cam_input' height='480' width='640' class='camara'></video> 
 				</center>
 				<script>
@@ -74,7 +74,7 @@ func main() {
 						cv['onRuntimeInitialized'] = () => {
 							let video = document.getElementById('cam_input');
 // ---------------------------------------------------------- si quieres ver solo la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-							video.style.display='none'; 
+//							video.style.display='none'; 
 							navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { video.srcObject = stream; video.play(); }).catch(function (err) { console.log('Error: ' + err); });
 							let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
 							let gray = new cv.Mat();
@@ -110,7 +110,7 @@ func main() {
 									document.getElementById('Estado').style.backgroundColor='#f44336';
 								}
 // ---------------------------------------------------------- si quieres ver la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-								cv.imshow('canvas_output', src);
+//								cv.imshow('canvas_output', src);
 								let delay = 1000 / FPS - (Date.now() - begin);
 								setTimeout(processVideo, delay);
 							} 
@@ -186,7 +186,7 @@ func main() {
 				</center><br><br>
 				<center>
 <! ---------------------------------------------------------- si quieres ver el recuadro, descomenta la siguiente linea ---------------------------------------------------------- >
-					<canvas id='canvas_output' /></canvas> 
+					<! canvas id='canvas_output' /><! /canvas> 
 					<video id='cam_input' height='480' width='640' class='camara'></video> 
 				</center>
 				<script>
@@ -199,7 +199,7 @@ func main() {
 						cv['onRuntimeInitialized'] = () => {
 							let video = document.getElementById('cam_input');
 // ---------------------------------------------------------- si quieres ver solo la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-							video.style.display='none'; 
+//							video.style.display='none'; 
 							navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { video.srcObject = stream; video.play(); }).catch(function (err) { console.log('Error: ' + err); });
 							let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
 							let gray = new cv.Mat();
@@ -235,7 +235,7 @@ func main() {
 									document.getElementById('Estado').style.backgroundColor='#f44336';
 								}
 // ---------------------------------------------------------- si quieres ver la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-								cv.imshow('canvas_output', src);
+//								cv.imshow('canvas_output', src);
 								let delay = 1000 / FPS - (Date.now() - begin);
 								setTimeout(processVideo, delay);
 							} 

@@ -153,6 +153,8 @@ func main() {
 						if(identificador==null){
 							return
 						}
+						tiempo = 0; //reiniciamos contador
+						document.getElementById('Tiempo').innerHTML = tiempo;
 						formdata.append('id', identificador);
 						formdata.append('image', file);
 						let xhr = new XMLHttpRequest();
@@ -290,11 +292,13 @@ func main() {
 					
 					/* mostramos el Identificador de la persona por 5 segundos */
 					async function identificacion(res) {
+						tiempo = 0; //reiniciamos contador
+						document.getElementById('Tiempo').innerHTML = tiempo;
 						identificado = 1;
 						document.getElementById('Identificador').innerHTML = res;
-						document.getElementById('Identificador').style.backgroundColor='#04aa6d';
+						document.getElementById('Identificador').style.backgroundColor='#00008b';
 						await sleep(5 * 1000); //hacemos una pausa de 5 segundos
-						document.getElementById('Identificador').innerHTML = 'Desconocido';
+						document.getElementById('Identificador').innerHTML = 'Rostro no detectado';
 						document.getElementById('Identificador').style.backgroundColor='#f44336';
 						identificado = 0;
 					}

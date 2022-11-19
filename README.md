@@ -10,9 +10,9 @@ Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 - @davisking (https://github.com/davisking/dlib-models)
 
 <p align="center">
-  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="70%">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="60%">
   &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/celphone.png" width="30%">
+  <img alt="Dark" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/celphone.png" width="25%">
 </p>
 
 ## Reconocimiento - dlib_face_recognition_resnet_model_v1.dat

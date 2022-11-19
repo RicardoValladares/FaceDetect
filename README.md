@@ -12,7 +12,7 @@ Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 <p align="center">
   <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="50%">
   &nbsp; &nbsp; &nbsp; &nbsp;
-  <img alt="Dark" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/celphone.png" width="21%">
+  <img alt="Dark" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/celphone.png" width="15%">
 </p>
 
 ## Reconocimiento - dlib_face_recognition_resnet_model_v1.dat

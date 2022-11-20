@@ -1,6 +1,12 @@
 # Rostro Biométrico
 Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas golang, javascript y C++.
 
+```bash
+git clone https://github.com/RicardoValladares/FaceDetect.git
+cd FaceDetect
+docker compose up
+```
+
 <p align="center">
   <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="50%">
   &nbsp; &nbsp; &nbsp; &nbsp;

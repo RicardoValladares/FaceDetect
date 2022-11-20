@@ -23,6 +23,10 @@ Librerías usadas:
 Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 - @davisking (https://github.com/davisking/dlib-models)
 
+
+<hr>
+
+
 ## Notas de: @davisking (https://github.com/davisking/dlib-models)
 
 ### Reconocimiento - dlib_face_recognition_resnet_model_v1.dat

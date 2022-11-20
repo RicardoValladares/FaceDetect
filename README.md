@@ -1,5 +1,5 @@
 # Rostro Biométrico
-Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas javascript y golang.
+Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas golang, javascript y C++.
 
 <p align="center">
   <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="50%">
@@ -12,6 +12,7 @@ Librerías usadas:
 - Go-Face (https://github.com/Kagami/go-face)
 - Go-Recognizer (https://github.com/leandroveronezi/go-recognizer)
 - OpenCV (https://docs.opencv.org/3.4/d5/d10/tutorial_js_root.html)
+- Dlib (http://dlib.net/)
 
 Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 - @davisking (https://github.com/davisking/dlib-models)

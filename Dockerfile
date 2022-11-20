@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
 
+LABEL maintainer="Ricardo Antonio Valladares Renderos <r_a_v_r_@hotmail.com>"
+
 RUN apt-get update && apt-get install -y \
     build-essential \
     cmake \
@@ -26,18 +28,12 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /
 
-ARG BRANCH=v19.24
-
-RUN wget -c -q https://github.com/davisking/dlib/archive/${BRANCH}.tar.gz \
- && tar xf ${BRANCH}.tar.gz \
- && mv dlib-* dlib \
- && mkdir -p dlib/build \
- && (cd dlib/build \
-    && cmake .. \
-    && cmake --build . --config Release \
-    && make install) \
- && rm -rf *.tar.gz /dlib/build
-
+RUN wget -c -q "https://github.com/davisking/dlib/archive/v19.24.tar.gz"
+RUN tar xf "v19.24.tar.gz" 
+RUN mv dlib-* dlib
+RUN mkdir -p dlib/build
+RUN (cd dlib/build && cmake .. && cmake --build . --config Release && make install)
+RUN rm -rf *.tar.gz /dlib/build
 
 RUN wget -P /tmp "https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz"
 RUN tar -C /usr/local -xzf "/tmp/go1.19.2.linux-amd64.tar.gz"
@@ -45,9 +41,6 @@ RUN rm "/tmp/go1.19.2.linux-amd64.tar.gz"
 ENV GOPATH /go
 ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-
-
-LABEL maintainer="Ricardo Antonio Valladares Renderos <r_a_v_r_@hotmail.com>"
 
 WORKDIR /docker
 

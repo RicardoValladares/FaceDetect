@@ -25,7 +25,8 @@ Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 
 
 <hr>
-
+<br>
+<br>
 
 ## Notas de: @davisking (https://github.com/davisking/dlib-models)
 

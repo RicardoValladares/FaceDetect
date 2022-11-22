@@ -41,8 +41,8 @@ func main() {
 	}
 	fmt.Println("Cargando rostros enrrolados...")
 	for _, file := range files {
-		addFile(&rec, filepath.Join(fotosDir, file.Name()), file.Name())
 		log.Println(file.Name())
+		addFile(&rec, filepath.Join(fotosDir, file.Name()), file.Name())
 	}
 	rec.SetSamples()
 	fmt.Println("Cargando servidor...")

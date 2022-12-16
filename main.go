@@ -16,12 +16,9 @@ const fotosDir = "enrrolados"
 const dataDir = "modelos"
 var rec = recognizer.Recognizer{}
 
-func addFile(rec *recognizer.Recognizer, Path, Id string) {
+func addFile(rec *recognizer.Recognizer, Path, Id string) error {
 	err := rec.AddImageToDataset(Path, Id)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
+	return err
 }
 
 func main() {
@@ -41,8 +38,12 @@ func main() {
 	}
 	fmt.Println("Cargando rostros enrrolados...")
 	for _, file := range files {
-		log.Println(file.Name())
-		addFile(&rec, filepath.Join(fotosDir, file.Name()), file.Name())
+		 if addFile(&rec, filepath.Join(fotosDir, file.Name()), file.Name()) != nil {
+			log.Println("Imagen no valida:",file.Name())
+			return
+		} else {
+			log.Println("Imagen cargada:",file.Name())
+		}
 	}
 	rec.SetSamples()
 	fmt.Println("Cargando servidor...")
@@ -443,5 +444,5 @@ func main() {
 		tempFile.Close()		
 	})
 	//log.Println("(http://localhost:5000/identificar) webservice de identificacion")
-	http.ListenAndServe(":5000", nil)
+	http.ListenAndServe(":5001", nil)
 }

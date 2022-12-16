@@ -47,7 +47,7 @@ func main() {
 	rec.SetSamples()
 	fmt.Println("Cargando servidor...")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { 
-		fmt.Fprintf(w, `<html>
+		fmt.Fprintf(w, `<html oncontextmenu='return false' onkeydown='return false'>
 			<head>
 				<meta name='viewport' content='width=device-width, initial-scale=1.0'> 
 				<title>Enrrolar</title>
@@ -55,26 +55,25 @@ func main() {
 				<script src='utils.js'></script>
 				<style> .labele { color: white; padding: 8px; font-family: Arial; background-color: #ff9800; } .labelt { color: white; padding: 8px; font-family: Arial; background-color: #04aa6d; } @media only screen and (max-width: 992px) { video.camara { height:640px; width:480px; display: block; margin-left: auto; margin-right: auto; } } @media only screen and (min-width: 993px) { video.camara { height:480px; width:640px; display: block; margin-left: auto; margin-right: auto;} } </style>
 			</head>
-			<body  bgcolor='#000' oncontextmenu='return false' onkeydown='return false' onload="setTimeout('temporizador()',1000)"> <br>
+			<body  bgcolor='#000' onload="setTimeout('temporizador()',1000)"> <br>
 				<center> 
 					<span id='Tiempo' class='labelt'>0</span> 
 					<span id='Estado' class='labele'>Iniciando...</span> 
 				</center><br><br>
 				<center>
-<! ---------------------------------------------------------- si quieres ver el recuadro, descomenta la siguiente linea ---------------------------------------------------------- >
 					<! canvas id='canvas_output' /><! /canvas> 
 					<video id='cam_input' height='480' width='640' class='camara'></video> 
 				</center>
 				<script>
 					/* variables globales para el funcionamiento */
 					let tiempo = 0; //variable que sirve como contador de segundos
+					let stop = 0; //variable que determina si detenemos el contador
 					
 					/* aperturamos webcam con opencv */
 					function openCvReady() {
 						cv['onRuntimeInitialized'] = () => {
 							let video = document.getElementById('cam_input');
-// ---------------------------------------------------------- si quieres ver solo la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-//							video.style.display='none'; 
+							/*video.style.display='none';*/ 
 							navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { video.srcObject = stream; video.play(); }).catch(function (err) { console.log('Error: ' + err); });
 							let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
 							let gray = new cv.Mat();
@@ -109,8 +108,7 @@ func main() {
 									document.getElementById('Estado').innerHTML = 'Rostro no detectado';
 									document.getElementById('Estado').style.backgroundColor='#f44336';
 								}
-// ---------------------------------------------------------- si quieres ver la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-//								cv.imshow('canvas_output', src);
+								/*cv.imshow('canvas_output', src);*/
 								let delay = 1000 / FPS - (Date.now() - begin);
 								setTimeout(processVideo, delay);
 							} 
@@ -120,16 +118,21 @@ func main() {
 					
 					/* temporizador que usa la variable global tiempo para contar los segundos */
 					function temporizador() {
-						if(document.getElementById('Estado').textContent=='Rostro detectado'){
-							tiempo = tiempo + 1;
-							document.getElementById('Tiempo').innerHTML = tiempo;
-						} else{
-							tiempo = 0; //reiniciamos el contador si no detectamos rostro
-							document.getElementById('Tiempo').innerHTML = tiempo;
-						}
-						//cuando haya pasado 3 segundos de la deteccion de un rostro ejecutar()
-						if(tiempo == 3){
-							ejecutar(); 
+						if(stop==0){
+							if(document.getElementById('Estado').textContent=='Rostro detectado'){
+								tiempo = tiempo + 1;
+								document.getElementById('Tiempo').innerHTML = tiempo;
+							} else{
+								tiempo = 0; //reiniciamos el contador si no detectamos rostro
+								document.getElementById('Tiempo').innerHTML = tiempo;
+							}
+							/*cuando haya pasado 3 segundos de la deteccion de un rostro ejecutar()*/
+							if(tiempo == 3){
+								stop = 1;
+								tiempo = 0;
+								document.getElementById('Tiempo').innerHTML = tiempo;
+								ejecutar(); 
+							}
 						}
 						setTimeout('temporizador()',1000);
 					}
@@ -143,7 +146,6 @@ func main() {
 						imageCanvas.height = v.videoHeight;
 						imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
 						imageCanvas.toBlob(postFile, 'image/jpeg');
-						tiempo = 0;
 					}
 					
 					/* enviamos el 'file' y el 'identificador' a la url 'enrrolar' por metodo 'POST' */
@@ -151,19 +153,30 @@ func main() {
 						let formdata = new FormData();
 						let identificador = prompt('Ingrese un identificador:');
 						if(identificador==null){
+							stop = 0;
 							return
 						}
-						tiempo = 0; //reiniciamos contador
-						document.getElementById('Tiempo').innerHTML = tiempo;
 						formdata.append('id', identificador);
 						formdata.append('image', file);
 						let xhr = new XMLHttpRequest();
 						xhr.open('POST', 'enrrolar', true);
 						xhr.onload = function () {
-							if (this.status === 200)
+							if (this.status === 200){
 								alert(this.response); //si se hizo un envio exitoso, sin error; mostramos la respuesta
-							else
+								stop = 0;
+							}
+							else{
 								alert(xhr); //si se hizo un envio con errores; mostramos el error
+								stop = 0;
+							}
+						};
+						xhr.onerror = function () {
+							alert('Error de comunicacion con el servidor');
+							stop = 0;
+						};
+						xhr.onabort = function () {
+							alert('Peticion de reconocimiento abortada');
+							stop = 0;
 						};
 						xhr.send(formdata);
 					}
@@ -173,7 +186,7 @@ func main() {
 	})
 	log.Println("(http://localhost:5000) enrrolador biometrico")
 	http.HandleFunc("/identificar.html", func(w http.ResponseWriter, r *http.Request) { 
-		fmt.Fprintf(w, `<html>
+		fmt.Fprintf(w, `<html oncontextmenu='return false' onkeydown='return false'>
 			<head>
 				<meta name='viewport' content='width=device-width, initial-scale=1.0'> 
 				<title>Identificar</title>
@@ -181,27 +194,25 @@ func main() {
 				<script src='utils.js'></script>
 				<style> .labele { color: white; padding: 8px; font-family: Arial; background-color: #ff9800; } .labelt { color: white; padding: 8px; font-family: Arial; background-color: #04aa6d; } .labeli { color: white; padding: 8px; font-family: Arial; background-color: #f44336; } @media only screen and (max-width: 992px) { video.camara { height:640px; width:480px; display: block; margin-left: auto; margin-right: auto; } } @media only screen and (min-width: 993px) { video.camara { height:480px; width:640px; display: block; margin-left: auto; margin-right: auto;} } </style>
 			</head>
-			<body  bgcolor='#000' oncontextmenu='return false' onkeydown='return false' onload="setTimeout('temporizador()',1000)"> <br>
+			<body  bgcolor='#000' onload="setTimeout('temporizador()',1000)"> <br>
 				<center> 
 					<span id='Tiempo' class='labelt'>0</span> <span id='Estado' class='labele'>Iniciando...</span> 
 					<span id='Identificador' class='labeli'>Desconocido</span> 
 				</center><br><br>
 				<center>
-<! ---------------------------------------------------------- si quieres ver el recuadro, descomenta la siguiente linea ---------------------------------------------------------- >
 					<! canvas id='canvas_output' /><! /canvas> 
 					<video id='cam_input' height='480' width='640' class='camara'></video> 
 				</center>
 				<script>
 					/* variables globales para el funcionamiento */
-					let identificado = 0; //variable que determina si hemos identificado a la persona
+					let stop = 0; //variable que determina si detenemos el contador
 					let tiempo = 0; //variable que sirve como contador de segundos
 					
 					/* aperturamos webcam con opencv */
 					function openCvReady() {
 						cv['onRuntimeInitialized'] = () => {
 							let video = document.getElementById('cam_input');
-// ---------------------------------------------------------- si quieres ver solo la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-//							video.style.display='none'; 
+							/*video.style.display='none';*/ 
 							navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { video.srcObject = stream; video.play(); }).catch(function (err) { console.log('Error: ' + err); });
 							let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
 							let gray = new cv.Mat();
@@ -236,8 +247,7 @@ func main() {
 									document.getElementById('Estado').innerHTML = 'Rostro no detectado';
 									document.getElementById('Estado').style.backgroundColor='#f44336';
 								}
-// ---------------------------------------------------------- si quieres ver la imagen con recuadro, descomenta la siguiente linea ----------------------------------------------------------
-//								cv.imshow('canvas_output', src);
+								/*cv.imshow('canvas_output', src);*/
 								let delay = 1000 / FPS - (Date.now() - begin);
 								setTimeout(processVideo, delay);
 							} 
@@ -247,7 +257,7 @@ func main() {
 					
 					/* temporizador que usa la variable global tiempo para contar los segundos */
 					function temporizador() {
-						if(identificado==0){
+						if(stop==0){
 							if(document.getElementById('Estado').textContent=='Rostro detectado'){
 								tiempo = tiempo + 1;
 								document.getElementById('Tiempo').innerHTML = tiempo;
@@ -255,9 +265,14 @@ func main() {
 								tiempo = 0; //reiniciamos contador si no detectamos rostro
 								document.getElementById('Tiempo').innerHTML = tiempo;
 							}
-							//cuando hayan pasado 3 segundos de la deteccion de un rostro ejecutar()
+							/*cuando hayan pasado 3 segundos de la deteccion de un rostro ejecutar()*/
 							if(tiempo == 3){
-								ejecutar(); 
+								stop = 1; //detenemos temporizador
+								tiempo = 0; //reiniciamos contador
+								document.getElementById('Tiempo').innerHTML = tiempo;
+								document.getElementById('Identificador').innerHTML = 'Enviando al servidor';
+								document.getElementById('Identificador').style.backgroundColor='#ff9800';
+								ejecutar(); //enviamos imagen al servidor 
 							}
 						}
 						setTimeout('temporizador()',1000); //volver a ejecutar la funcion, dentro de un segundo
@@ -272,7 +287,6 @@ func main() {
 						imageCanvas.height = v.videoHeight;
 						imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
 						imageCanvas.toBlob(postFile, 'image/jpeg');
-						tiempo = 0;
 					}
 					
 					/* enviamos el 'file' a la url 'identificar' por metodo 'POST' */
@@ -282,25 +296,41 @@ func main() {
 						let xhr = new XMLHttpRequest();
 						xhr.open('POST', 'identificar', true);
 						xhr.onload = function () {
-							//si se hizo un envio exitoso, sin error; enviamos la respuerta indentificacion()
+							/*si se hizo un envio exitoso, sin error; enviamos la respuerta indentificacion()*/
 							if (this.status === 200){
 								if (this.response != "NO IDENTIFICADO"){ identificacion(this.response); }
+								else{ 
+									document.getElementById('Identificador').innerHTML = 'NO IDENTIFICADO';
+									document.getElementById('Identificador').style.backgroundColor='#f44336';
+									stop = 0; 
+								}
 							}
+						};
+						xhr.onerror = function () {
+							document.getElementById('Identificador').innerHTML = 'Error de comunicacion';
+							alert('Error de comunicacion con el servidor');
+							document.getElementById('Identificador').innerHTML = 'NO IDENTIFICADO';
+							document.getElementById('Identificador').style.backgroundColor='#f44336';
+							stop = 0;
+						};
+						xhr.onabort = function () {
+							document.getElementById('Identificador').innerHTML = 'Peticion abortada';
+							alert('Peticion de reconocimiento abortada');
+							document.getElementById('Identificador').innerHTML = 'NO IDENTIFICADO';
+							document.getElementById('Identificador').style.backgroundColor='#f44336';
+							stop = 0;
 						};
 						xhr.send(formdata);
 					}
 					
 					/* mostramos el Identificador de la persona por 5 segundos */
 					async function identificacion(res) {
-						tiempo = 0; //reiniciamos contador
-						document.getElementById('Tiempo').innerHTML = tiempo;
-						identificado = 1;
 						document.getElementById('Identificador').innerHTML = res;
 						document.getElementById('Identificador').style.backgroundColor='#00008b';
 						await sleep(5 * 1000); //hacemos una pausa de 5 segundos
-						document.getElementById('Identificador').innerHTML = 'Rostro no detectado';
+						document.getElementById('Identificador').innerHTML = 'Desconocido';
 						document.getElementById('Identificador').style.backgroundColor='#f44336';
-						identificado = 0;
+						stop = 0;
 					}
 					
 					/* funcion que simula sleep */
@@ -395,6 +425,7 @@ func main() {
 			tempFile.Close()
 			return
 		}
+		
 		if len(face) > 0 {
 			fmt.Fprintf(w, face[0].Data.Id)
 			log.Println(face[0].Data.Id)

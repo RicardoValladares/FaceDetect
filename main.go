@@ -352,6 +352,12 @@ func main() {
 	log.Println("(http://localhost:5000/enrrolados/) rostros enrrolados")
 	http.HandleFunc("/enrrolar", func(w http.ResponseWriter, r *http.Request) { 
 		identificador := r.FormValue("id")
+		enrrolados, err := os.Stat("./enrrolados/"+identificador)
+		if (err == nil) && !enrrolados.IsDir(){
+			fmt.Fprintf(w, "Ya existe el identificador: '%s'\n",identificador)
+			log.Println("Ya existe el identificador:",identificador)
+			return
+		}
 		if identificador == "" || identificador == "null" {
 			http.Error(w, "Error al obtener el identificador", http.StatusBadRequest)
 			log.Println("Error al obtener el identificador")

@@ -52,6 +52,6 @@ RUN go mod download
 
 RUN go build -o main .
 
-EXPOSE 443
+EXPOSE 80
 
 CMD ["./main"]

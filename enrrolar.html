@@ -1,0 +1,140 @@
+<html oncontextmenu='return false' onkeydown='return false'>
+	<head>
+		<meta name='viewport' content='width=device-width, initial-scale=1.0'> 
+		<title>Enrrolar</title>
+		<script async src='opencv.js' onload='openCvReady();'></script>
+		<script src='utils.js'></script>
+		<style> .labele { color: white; padding: 8px; font-family: Arial; background-color: #ff9800; } .labelt { color: white; padding: 8px; font-family: Arial; background-color: #04aa6d; } @media only screen and (max-width: 992px) { video.camara { height:640px; width:480px; display: block; margin-left: auto; margin-right: auto; } } @media only screen and (min-width: 993px) { video.camara { height:480px; width:640px; display: block; margin-left: auto; margin-right: auto;} } </style>
+	</head>
+	<body  bgcolor='#000' onload="setTimeout('temporizador()',1000)"> 
+		<br>
+		<center> 
+			<span id='Tiempo' class='labelt'>0</span> 
+			<span id='Estado' class='labele'>Iniciando...</span> 
+		</center>
+		<br>
+		<br>
+		<center>
+			<! canvas id='canvas_output' /><! /canvas> 
+			<video id='cam_input' height='480' width='640' class='camara'></video> 
+		</center>
+		<script>
+			/* variables globales para el funcionamiento */
+			let tiempo = 0; 
+			let stop = 0; 
+			/* aperturamos webcam con opencv */
+			function openCvReady() {
+				cv['onRuntimeInitialized'] = () => {
+					let video = document.getElementById('cam_input');
+					/*video.style.display='none';*/ 
+					navigator.mediaDevices.getUserMedia({ video: true, audio: false }).then(function (stream) { 
+						video.srcObject = stream; video.play(); 
+					}).catch(function (err) { 
+						console.log('Error: ' + err); 
+					});
+					let src = new cv.Mat(video.height, video.width, cv.CV_8UC4);
+					let gray = new cv.Mat();
+					let cap = new cv.VideoCapture(cam_input);
+					let faces = new cv.RectVector();
+					let faceClassifier = new cv.CascadeClassifier();
+					let utils = new Utils('errorMessage');
+					let faceCascade = 'haarcascade_frontalface_default.xml';
+					utils.createFileFromUrl(faceCascade, faceCascade, () => { faceClassifier.load(faceCascade); });
+					const FPS = 40;
+					function processVideo() {
+						let begin = Date.now();
+						cap.read(src);
+						cv.cvtColor(src, gray, cv.COLOR_RGBA2GRAY, 0);
+						let detectado=0;
+						try {
+							faceClassifier.detectMultiScale(gray, faces, 1.1, 3, 0);
+							for (let i = 0; i < faces.size(); ++i) {
+								let face = faces.get(i);
+								let point1 = new cv.Point(face.x, face.y);
+								let point2 = new cv.Point(face.x + face.width, face.y + face.height);
+								cv.rectangle(src, point1, point2, [0, 255, 0, 255]);
+								detectado = 1;
+							}
+						} catch (err) {
+							console.log(err);
+						}
+						if(detectado==1){
+							document.getElementById('Estado').innerHTML = 'Rostro detectado';
+							document.getElementById('Estado').style.backgroundColor='#04aa6d';
+						} else { 
+							document.getElementById('Estado').innerHTML = 'Rostro no detectado';
+							document.getElementById('Estado').style.backgroundColor='#f44336';
+						}
+						/*cv.imshow('canvas_output', src);*/
+						let delay = 1000 / FPS - (Date.now() - begin);
+						setTimeout(processVideo, delay);
+					} 
+					setTimeout(processVideo, 0);
+				}
+			}
+
+			/* temporizador que usa la variable global tiempo para contar los segundos */
+			function temporizador() {
+				if(stop==0){
+					if(document.getElementById('Estado').textContent=='Rostro detectado'){
+						tiempo = tiempo + 1;
+						document.getElementById('Tiempo').innerHTML = tiempo;
+					} else { 
+						tiempo = 0;document.getElementById('Tiempo').innerHTML = tiempo;
+					}
+					/*cuando haya pasado 3 segundos de la deteccion de un rostro ejecutar()*/
+					if(tiempo == 3){ 
+						stop = 1;
+						tiempo = 0;
+						document.getElementById('Tiempo').innerHTML = tiempo;
+						ejecutar(); 
+					}
+				}
+				setTimeout('temporizador()',1000);
+			}
+
+			/* generamos el archivo de imagen sin el recuadro */
+			function ejecutar(){
+				let imageCanvas = document.createElement('canvas');
+				let imageCtx = imageCanvas.getContext('2d');
+				let v = document.getElementById('cam_input');
+				imageCanvas.width = v.videoWidth;
+				imageCanvas.height = v.videoHeight;
+				imageCtx.drawImage(v, 0, 0, v.videoWidth, v.videoHeight);
+				imageCanvas.toBlob(postFile, 'image/jpeg');
+			}
+
+			/* enviamos el 'file' y el 'identificador' a la url 'enrrolar' por metodo 'POST' */
+			function postFile(file) {
+				let formdata = new FormData();
+				let identificador = prompt('Ingrese un identificador:');
+				if(identificador==null){
+					stop = 0;
+					return 
+				} 
+				formdata.append('id', identificador);
+				formdata.append('image', file);
+				let xhr = new XMLHttpRequest();
+				xhr.open('POST', 'enrrolar', true); 
+				xhr.onload = function () {
+					if (this.status === 200){
+						alert(this.response); 
+						stop = 0;
+					} else {
+						alert(this.response); 
+						stop = 0;
+					}
+				};
+				xhr.onerror = function () {
+					alert('Error de comunicacion con el servidor');
+					stop = 0;
+				};
+				xhr.onabort = function () {
+					alert('Peticion de reconocimiento abortada');
+					stop = 0;
+				};
+				xhr.send(formdata);
+			}
+		</script>
+	</body>
+</html>

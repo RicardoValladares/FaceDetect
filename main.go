@@ -48,7 +48,7 @@ func main() {
 		}
 	}
 	rec.SetSamples()
-	fmt.Println("http://localhost")
+	fmt.Println("http://localhost:5000")
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) { http.ServeFile(w, r, "enrrolar.html") })
 	http.HandleFunc("/identificar.html", func(w http.ResponseWriter, r *http.Request) { http.ServeFile(w, r, "identificar.html") })
 	http.HandleFunc("/opencv.js", func(w http.ResponseWriter, r *http.Request) { http.ServeFile(w, r, "opencv.js") })
@@ -59,9 +59,9 @@ func main() {
 	http.Handle("/enrrolados/", http.StripPrefix("/enrrolados", (http.FileServer(http.Dir("./enrrolados")))))
 	http.HandleFunc("/enrrolar", enrrolar)
 	http.HandleFunc("/identificar", identificar)
-	err = http.ListenAndServe(":80", nil)
+	err = http.ListenAndServe(":5000", nil)
 	if err != nil {
-		log.Fatal("Error de ListenAndServe, Necesites derechos de super usuario y que el puerto 80 este desocupado sin bloqueos del firewall")
+		log.Fatal("Error de ListenAndServe, Necesites derechos de super usuario y que el puerto 5000 este desocupado sin bloqueos del firewall")
 	}
 }
 

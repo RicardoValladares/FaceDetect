@@ -7,16 +7,12 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Login to GitHub Container Registry
-      uses: docker/login-action@v1
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.TOKEN }}
-    - name: Build FaceDetect Docker image
-      run: |
-       docker build . --tag ghcr.io/ricardovalladares/facedetect:latest
-       docker run ghcr.io/ricardovalladares/facedetect:latest
-       docker push ghcr.io/ricardovalladares/facedetect:latest
+      - name: Login with Github Container registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Publish to Github Container registry
+        run: docker push ghcr.io/ricardovalladares/facedetect:latest

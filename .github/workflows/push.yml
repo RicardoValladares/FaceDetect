@@ -11,6 +11,6 @@ jobs:
       uses: actions/checkout@v1
     - name: Build & Push Image
       run: |
-        echo "${{ secrets.DOCKERPW }}" | docker login -u "RicardoValladares" --password-stdin
+        echo "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" | docker login -u "RicardoValladares" --password-stdin
         docker image build -t ricardovalladares/facedetect:latest .
         docker push ricardovalladares/facedetect:latest

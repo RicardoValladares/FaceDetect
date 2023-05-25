@@ -16,7 +16,6 @@ docker run --publish 5001:5001 ghcr.io/ricardovalladares/facedetect
 Librerías usadas:
 - OpenCV (https://docs.opencv.org/3.4/d5/d10/tutorial_js_root.html)
 - Go-Recognizer (https://github.com/leandroveronezi/go-recognizer)
-- Go-Face (https://github.com/Kagami/go-face)
 - Dlib (http://dlib.net/)
 
 Modelos entrenados para el reconocimiento, detección y predicción de rostros:

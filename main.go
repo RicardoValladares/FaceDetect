@@ -65,6 +65,7 @@ func main() {
 	}
 }
 
+
 func identificar(w http.ResponseWriter, r *http.Request) {
 	file, handler, err := r.FormFile("image")
 	if err != nil {
@@ -119,6 +120,7 @@ func identificar(w http.ResponseWriter, r *http.Request) {
 	file.Close()
 	tempFile.Close()
 }
+
 
 func enrrolar(w http.ResponseWriter, r *http.Request) {
 	identificador := r.FormValue("id")

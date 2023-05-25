@@ -11,7 +11,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ github.actor }}
+          username: RicardoValladares
           password: ${{ secrets.TOKEN }}
 
       - name: Publish to Github Container registry

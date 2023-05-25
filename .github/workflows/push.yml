@@ -9,15 +9,6 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-
-    - name: Start containers
-      run: docker-compose -f "docker-compose.yml" up -d --build
-
-    - name: Stop containers
-      if: always()
-      run: docker-compose -f "docker-compose.yml" down
-
-    - uses: actions/checkout@v1
     - name: Build & Push Image
       run: |
         echo "${{ secrets.DOCKERPW }}" | docker login -u "RicardoValladares" --password-stdin

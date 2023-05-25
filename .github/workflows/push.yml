@@ -12,7 +12,7 @@ jobs:
         with:
           registry: ghcr.io
           username: RicardoValladares
-          password: 17092022Veronica
+          password: OK
 
       - name: Publish to Github Container registry
         run: docker push ghcr.io/ricardovalladares/facedetect:latest

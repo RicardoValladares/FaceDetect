@@ -16,3 +16,4 @@ jobs:
 
       - name: Publish to Github Container registry
         run: docker push ghcr.io/ricardovalladares/facedetect:latest
+

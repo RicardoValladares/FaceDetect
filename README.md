@@ -1,10 +1,9 @@
 # Rostro Biométrico
-Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas escritas en golang, javascript y C++. Para poder ejecutar este proyecto de manera mas fácil, evitando el tedioso trabajo de instalar las dependencias para compilar, puedes ejecutar los siguientes comandos, para los cuales solo necesitaras tener instalado docker y git:
+Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas escritas en golang, javascript y C++. Para poder ejecutar este proyecto de manera mas fácil, evitando el tedioso trabajo de instalar las dependencias para compilar, puedes ejecutar los siguientes comandos, para los cuales solo necesitaras tener instalado docker:
 
 ```bash
-git clone https://github.com/RicardoValladares/FaceDetect.git
-cd FaceDetect
-docker compose up
+docker pull ghcr.io/ricardovalladares/facedetect:latest
+docker run --publish 5001:5001 ghcr.io/ricardovalladares/facedetect
 ```
 
 <p align="center">

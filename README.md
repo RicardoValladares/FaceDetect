@@ -1,10 +1,6 @@
 # Rostro Biométrico
-Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas escritas en golang, javascript y C++. Para poder ejecutar este proyecto de manera mas fácil, evitando el tedioso trabajo de instalar las dependencias para compilar, puedes ejecutar los siguientes comandos, para los cuales solo necesitaras tener instalado docker:
+Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas escritas en python, javascript y C++.
 
-```bash
-docker pull ghcr.io/ricardovalladares/facedetect:latest
-docker run --publish 5001:5001 ghcr.io/ricardovalladares/facedetect
-```
 
 <p align="center">
   <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="50%">
@@ -15,7 +11,7 @@ docker run --publish 5001:5001 ghcr.io/ricardovalladares/facedetect
 
 Librerías usadas:
 - OpenCV (https://docs.opencv.org/3.4/d5/d10/tutorial_js_root.html)
-- Go-Recognizer (https://github.com/leandroveronezi/go-recognizer)
+- Face Recognition (https://github.com/ageitgey/face_recognition)
 - Dlib (http://dlib.net/)
 
 Modelos entrenados para el reconocimiento, detección y predicción de rostros:
@@ -36,3 +32,5 @@ Este modelo está entrenado con el conjunto de datos: http://dlib.net/files/data
 
 ### Predicción - shape_predictor_5_face_landmarks.dat
 Este es un modelo de referencia de 5 puntos que identifica las esquinas de los ojos y la parte inferior de la nariz. Se entrenó con el conjunto de datos que se encuentra en http://dlib.net/files/data/dlib_faces_5points.tar, que consta de 7198 rostros. Se creó este conjunto de datos descargando imágenes de Internet y anotándolas con la herramienta imglab de dlib. Este modelo está diseñado para funcionar bien con el detector de rostros HOG de dlib y el detector de rostros CNN (mmod_human_face_detector.dat).
+
+### shape_predictor_68_face_landmarks.dat

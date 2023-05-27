@@ -3,8 +3,8 @@ push:
 	git status
 	git add .
 	git commit -m "$$(date)"
-	git pull origin facedetection 
-	git push origin facedetection
+	git pull origin Golang 
+	git push origin Golang
 
 gorun:
 	go run main.go

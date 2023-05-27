@@ -1,6 +1,9 @@
 # Rostro Biométrico
-Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas escritas en python, javascript y C++.
+Este proyecto es un servidor web hecho para la detección y reconocimiento de rostros; implementando un conjunto de herramientas escritas en python, javascript y C++. Para poder ejecutar este proyecto de manera mas fácil, evitando el tedioso trabajo de instalar las dependencias para compilar, puedes ejecutar los siguientes comandos, para los cuales solo necesitaras tener instalado docker:
 
+```bash
+docker-compose up
+```
 
 <p align="center">
   <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/desktop.png" width="50%">

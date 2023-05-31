@@ -34,14 +34,14 @@ Este modelo está entrenado con el conjunto de datos: http://dlib.net/files/data
 Este es un modelo de referencia de 5 puntos que identifica las esquinas de los ojos y la parte inferior de la nariz. Se entrenó con el conjunto de datos que se encuentra en http://dlib.net/files/data/dlib_faces_5points.tar, que consta de 7198 rostros. Se creó este conjunto de datos descargando imágenes de Internet y anotándolas con la herramienta imglab de dlib. Este modelo está diseñado para funcionar bien con el detector de rostros HOG de dlib y el detector de rostros CNN (mmod_human_face_detector.dat).
 
 <p align="center">
-  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Python/shape_predictor_5_face_landmarks.png" width="25%">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Python/shape_predictor_5_face_landmarks.png" width="50%">
 </p>
 
 ### shape_predictor_68_face_landmarks.dat
 Este modelo está entrenado en el conjunto de datos ibug 300-W (https://ibug.doc.ic.ac.uk/resources/facial-point-annotations/). La licencia de este conjunto de datos excluye el uso comercial y Stefanos Zafeiriou, uno de los creadores del conjunto de datos, pidió que incluyera una nota aquí diciendo que el modelo entrenado no se puede usar en un producto comercial. Por lo tanto, debe comunicarse con un abogado o hablar con el Imperial College London para averiguar si está bien que use este modelo en un producto comercial.
 
 <p align="center">
-  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Python/shape_predictor_68_face_landmarks.png" width="25%">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Python/shape_predictor_68_face_landmarks.png" width="50%">
 </p>
 
 ### Reconocimiento - dlib_face_recognition_resnet_model_v1.dat

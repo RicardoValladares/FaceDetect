@@ -1,30 +1,30 @@
-FROM ubuntu:22.04
+FROM python:3.10.3-slim-bullseye
 
-LABEL maintainer="Ricardo Antonio Valladares Renderos <r_a_v_r_@hotmail.com>"
-
-RUN apt-get update && apt-get install -y \
+RUN apt-get -y update
+RUN apt-get install -y --fix-missing \
     build-essential \
     cmake \
-    curl \
     gfortran \
-    git \
     gcc \
     g++ \
+    git \
     wget \
+    curl \
     graphicsmagick \
     libgraphicsmagick1-dev \
     libatlas-base-dev \
     libavcodec-dev \
     libavformat-dev \
-    libboost-all-dev \
     libgtk2.0-dev \
     libjpeg-dev \
     liblapack-dev \
     libswscale-dev \
     pkg-config \
+    python3-dev \
+    python3-numpy \
     software-properties-common \
     zip \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 WORKDIR /
 
@@ -35,23 +35,18 @@ RUN mkdir -p dlib/build
 RUN (cd dlib/build && cmake .. && cmake --build . --config Release && make install)
 RUN rm -rf *.tar.gz /dlib/build
 
-RUN wget -P /tmp "https://dl.google.com/go/go1.19.2.linux-amd64.tar.gz"
-RUN tar -C /usr/local -xzf "/tmp/go1.19.2.linux-amd64.tar.gz"
-RUN rm "/tmp/go1.19.2.linux-amd64.tar.gz"
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+RUN pip3 install Flask
+
+RUN pip3 install dlib
+
+RUN pip3 install face_recognition
+
+RUN pip3 install face_recognition_models
 
 WORKDIR /docker
 
 COPY . .
 
-COPY go.mod ./
-
-RUN go mod download
-
-RUN go build -o main .
-
 EXPOSE 5001
 
-CMD ["./main"]
+CMD python3 ./main.py

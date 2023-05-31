@@ -3,15 +3,8 @@ push:
 	git status
 	git add .
 	git commit -m "$$(date)"
-	git pull origin Golang 
-	git push origin Golang
-
-gorun:
-	go run main.go
+	git pull origin Python 
+	git push origin Python
 
 run:
-	./main
-
-compile:
-	go build main.go
-
+	python main.py

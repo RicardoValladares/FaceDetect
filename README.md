@@ -28,19 +28,23 @@ Modelos entrenados para el reconocimiento, detección y predicción de rostros:
 
 ## Notas de: @davisking (https://github.com/davisking/dlib-models)
 
-### Detección - mmod_human_face_detector.dat
+### mmod_human_face_detector.dat
 Este modelo está entrenado con el conjunto de datos: http://dlib.net/files/data/dlib_face_detection_dataset-2016-09-30.tar.gz. Se creó el conjunto de datos encontrando imágenes de rostros en muchos conjuntos de datos de imágenes disponibles públicamente (excluyendo el conjunto de datos FDDB). En particular, hay imágenes de ImageNet, AFLW, Pascal VOC, el conjunto de datos VGG, WIDER y face scrub. Todas las anotaciones en el conjunto de datos fueron creadas usando la herramienta imglab de dlib.
 
 <p align="center">
-  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/mmod_human_face_detector.png" width="100%">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Golang/mmod_human_face_detector.png" width="100%">
 </p>
 
-### Predicción - shape_predictor_5_face_landmarks.dat
+### shape_predictor_5_face_landmarks.dat
 Este es un modelo de referencia de 5 puntos que identifica las esquinas de los ojos y la parte inferior de la nariz. Se entrenó con el conjunto de datos que se encuentra en http://dlib.net/files/data/dlib_faces_5points.tar, que consta de 7198 rostros. Se creó este conjunto de datos descargando imágenes de Internet y anotándolas con la herramienta imglab de dlib. Este modelo está diseñado para funcionar bien con el detector de rostros HOG de dlib y el detector de rostros CNN (mmod_human_face_detector.dat).
 
 <p align="center">
-  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/facedetection/shape_predictor_5_face_landmarks.png" width="50%">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Golang/shape_predictor_5_face_landmarks.png" width="50%">
 </p>
 
-### Reconocimiento - dlib_face_recognition_resnet_model_v1.dat
+### dlib_face_recognition_resnet_model_v1.dat
 La red se entrenó desde cero con un conjunto de datos de aproximadamente 3 millones de rostros. Este conjunto de datos se deriva de dos conjuntos de datos. El conjunto de datos de face scrub (http://vintage.winklerbros.net/facescrub.html) y el conjunto de datos de VGG (http://www.robots.ox.ac.uk/~vgg/data/vgg_face/). Se hizo este modelo entrenando una CNN de reconocimiento facial y luego usando métodos de agrupación de gráficos y mucha revisión manual para limpiar el conjunto de datos. Al final, aproximadamente la mitad de las imágenes son de VGG y face scrub. Además, el número total de identidades individuales en el conjunto de datos es 7485. Se evitaron superposiciones de identidades en LFW.
+
+<p align="center">
+  <img alt="Light" src="https://raw.githubusercontent.com/RicardoValladares/FaceDetect/Golang/dlib_face_recognition_resnet_model_v1.png" width="100%">
+</p>

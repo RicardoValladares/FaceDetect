@@ -8,12 +8,13 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+
 	"github.com/leandroveronezi/go-recognizer"
 )
 
 const (
 	fotosDir = "enrrolados"
-	dataDir = "modelos"
+	dataDir  = "modelos"
 )
 
 var rec = recognizer.Recognizer{}
@@ -65,7 +66,6 @@ func main() {
 	}
 }
 
-
 func identificar(w http.ResponseWriter, r *http.Request) {
 	file, handler, err := r.FormFile("image")
 	if err != nil {
@@ -93,7 +93,7 @@ func identificar(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tempFile.Write(fileBytes)
-	filetype := handler.Header.Get("content-type")
+	filetype := http.DetectContentType(fileBytes)
 	if filetype != "image/jpeg" && filetype != "image/jpg" && filetype != "image/gif" && filetype != "image/png" {
 		http.Error(w, "Error de formato en el archivo", http.StatusBadRequest)
 		log.Println("Error de formato en el archivo")
@@ -120,7 +120,6 @@ func identificar(w http.ResponseWriter, r *http.Request) {
 	file.Close()
 	tempFile.Close()
 }
-
 
 func enrrolar(w http.ResponseWriter, r *http.Request) {
 	identificador := r.FormValue("id")
